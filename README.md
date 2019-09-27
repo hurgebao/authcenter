@@ -1,0 +1,7 @@
+ # 1、license文件授权
+ # 2、绑定ip和mac
+ # 3、限制使用日期，并能防止客户自己修改时间
+ # 4、限制范围：禁止登录系统，数据加密防止登录数据库查询，完全删除代码和数据
+ # 5、替换license文件即可延期
+
+  curl -i -H "Content-type:application/json" -X POST -d '{"ip":"172.16.3.196","mac":"B0-83-FE-70-3F-1F","authTime":"20190927162700"}' http://localhost:8080/auth
