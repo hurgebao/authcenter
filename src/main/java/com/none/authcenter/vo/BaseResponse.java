@@ -8,7 +8,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class AuthResponse extends BasicVO {
+public class BaseResponse extends BaseVO {
     private String code;
     private String msg;
 }
