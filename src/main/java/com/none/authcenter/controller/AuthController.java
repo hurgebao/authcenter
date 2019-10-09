@@ -2,6 +2,7 @@ package com.none.authcenter.controller;
 
 import com.none.authcenter.common.CodeConstants;
 import com.none.authcenter.utils.STD3DesUtil;
+import com.none.authcenter.utils.SeedUtils;
 import com.none.authcenter.utils.ValidateUtils;
 import com.none.authcenter.vo.AuthRequest;
 import com.none.authcenter.vo.BaseResponse;
@@ -76,9 +77,10 @@ public class AuthController {
         }
         logger.info("获取LicenceKey，seed={}",seed);
         try {
-            String data=seed.getPrivateCode().toUpperCase()+seed.getMac().replaceAll("-", "").toUpperCase()+seed.getExpireDate();
+            String data=SeedUtils.generateHeaderLength(seed)+ SeedUtils.generateHeader(seed);
+            logger.info("LicenceKey，明文={}", data);
             String licenceKey= STD3DesUtil.des3EncodeECBBase64String(key, data);
-            logger.info("LicenceKey={}", licenceKey);
+            logger.info("LicenceKey,密文={}", licenceKey);
             response.setCode(CodeConstants.SUCCESS);
             response.setMsg("success");
             response.setT(licenceKey);
