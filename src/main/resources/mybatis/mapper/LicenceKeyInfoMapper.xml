@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.none.authcenter.dao.LicenceKeyInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.none.authcenter.vo.LicenceKeyInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
+    <result column="expire_date" property="expireDate" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="mac" property="mac" jdbcType="VARCHAR" />
+    <result column="salt" property="salt" jdbcType="VARCHAR" />
+    <result column="licence_key_seed" property="licenceKeySeed" jdbcType="VARCHAR" />
+    <result column="licence_key" property="licenceKey" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, org_code, expire_date, ip, mac, salt, licence_key_seed, licence_key, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from licence_key_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectBySeed" resultMap="BaseResultMap" parameterType="com.none.authcenter.vo.LicenceKeySeed" >
+    select
+    <include refid="Base_Column_List" />
+    from licence_key_info
+    where ip=#{ip} and mac=#{mac} and salt=#{salt} and org_code=#{orgCode} and expire_date=#{expireDate}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from licence_key_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.none.authcenter.vo.LicenceKeyInfo" >
+    insert into licence_key_info (id, org_code, expire_date, 
+      ip, mac, salt, licence_key_seed, 
+      licence_key, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{orgCode,jdbcType=VARCHAR}, #{expireDate,jdbcType=VARCHAR}, 
+      #{ip,jdbcType=VARCHAR}, #{mac,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{licenceKeySeed,jdbcType=VARCHAR}, 
+      #{licenceKey,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.none.authcenter.vo.LicenceKeyInfo" >
+    insert into licence_key_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orgCode != null" >
+        org_code,
+      </if>
+      <if test="expireDate != null" >
+        expire_date,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="mac != null" >
+        mac,
+      </if>
+      <if test="salt != null" >
+        salt,
+      </if>
+      <if test="licenceKeySeed != null" >
+        licence_key_seed,
+      </if>
+      <if test="licenceKey != null" >
+        licence_key,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="expireDate != null" >
+        #{expireDate,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null" >
+        #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="licenceKeySeed != null" >
+        #{licenceKeySeed,jdbcType=VARCHAR},
+      </if>
+      <if test="licenceKey != null" >
+        #{licenceKey,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.none.authcenter.vo.LicenceKeyInfo" >
+    update licence_key_info
+    <set >
+      <if test="orgCode != null" >
+        org_code = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="expireDate != null" >
+        expire_date = #{expireDate,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null" >
+        mac = #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="licenceKeySeed != null" >
+        licence_key_seed = #{licenceKeySeed,jdbcType=VARCHAR},
+      </if>
+      <if test="licenceKey != null" >
+        licence_key = #{licenceKey,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.none.authcenter.vo.LicenceKeyInfo" >
+    update licence_key_info
+    set org_code = #{orgCode,jdbcType=VARCHAR},
+      expire_date = #{expireDate,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      mac = #{mac,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      licence_key_seed = #{licenceKeySeed,jdbcType=VARCHAR},
+      licence_key = #{licenceKey,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

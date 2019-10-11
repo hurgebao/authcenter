@@ -24,7 +24,7 @@ public class AuthRequest extends BaseVO {
      */
     @ApiModelProperty(value = "认证方代码",example = "TAOBAO",position=2)
     @NotNull(message = "认证方代码不能为空")
-    private String privateCode;
+    private String orgCode;
     /**
      * 服务器ip
      */
@@ -43,7 +43,7 @@ public class AuthRequest extends BaseVO {
      * 私有代码+机器MAC+到期日 加密
      *
      */
-    @ApiModelProperty(value = "授权码",example = "U9zuh4A6F9gxDoSnLN1rhteOvc1NQLM+oIT5bJeeKZY=",position = 5)
+    @ApiModelProperty(value = "授权码",example = "t/cxhmtlzI9JnJfUBIf5R/gZ/Z22Ys1nTSilbLzRpx2qBIjNd6ppaN/0uxIuAfoEQMHGIO6bWFahPyVx08hKCqEqC8SYzwWj",position = 5)
     @NotNull(message = "授权码不能为空")
     private String licenceKey;
     /**
@@ -61,7 +61,7 @@ public class AuthRequest extends BaseVO {
     /**
      * 签名串
      */
-    @ApiModelProperty(value = "签名串",example = "vYybJCklaKtUdTnBmmZFac1wF5MIyXBNWu0MxA6r59dXg123X3NV1gdYlKRERjttc3qMoqrrr9pkEzTBcyC/4ar6fpQ0d3vHtbOjDIXUWDBturyRoBnvZT0I9I+8VWEoU90CVzWIMG2zKaFgIscTLR2+0zswVJ3YT0YB6x3hePL2Vh9NP9aWXCpsZRQMFUFdqgSIzXeqaWjxwSpLP/NYoid7b24vpRD139HgdULCHMjjT27WfWZNDi6j0hD8FStzsigCcM6/7DA=",position = 8)
+    @ApiModelProperty(value = "签名串",example = "vYybJCklaKtUdTnBmmZFac1wF5MIyXBNWu0MxA6r59dXg123X3NV1gdYlKRERjttc3qMoqrrr9pkEzTBcyC/4ar6fpQ0d3vHtbOjDIXUWDB7A1hB5xSsWdYEnD8ealbypfOIw2YNIP5KqpNphCzP7lfDCe/Sjb4dTP1tilB7+yZOE9PRu8tIOphPEoGbfKPbw2QBDnHKZvm43Hc022E9pbSgyeswodNqQHhll6FNHRLABa2URPGGo6bXaSKaVu0KhtsADcpcZvKlzmG3M4NhAa+JlCeUyAYt39HgdULCHMjjT27WfWZNDi6j0hD8FStzsigCcM6/7DA=",position = 8)
     @NotNull(message = "签名串不能为空")
     private String data;
 

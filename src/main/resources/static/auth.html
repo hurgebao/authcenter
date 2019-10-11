@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>生成licence-key</title>
+    <script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/jquery.serializejson.js"></script>
+
+    <script type="text/javascript">
+        function showStockInfo(){
+            var stocknameEL=$("#stocknameEL").val();
+            $("#stockList").html("");
+          if(stocknameEL !=null && stocknameEL.length>0){
+                $.ajax({
+                    type : 'GET',
+                    async : true,
+                    url: '/stockIndex/'+stocknameEL,
+                    success: function(data) {
+                        var pnode="";
+                        for(var i=0;i<data.length;i++){
+                           pnode+= ("<p>" +data[i].stock_code + "(" + data[i].stock_name +")</p>" );
+                        }
+                        $("#stockList").html(pnode);
+                        $("#refreshMsg").html("");
+                    },
+                    error: function (message) {
+                        alert("后台异常:"+message);
+                    }
+                });
+            }
+        }
+        function getKey(){
+            $("#rbutton").attr("disabled",true);
+            $.ajax({
+                type : 'POST',
+                async : true,
+                url: '/key',
+                dataType:'json',
+                contentType:'application/json;charset=utf-8',
+                data:JSON.stringify($("#keyseed").serializeJSON()),
+                success: function(data) {
+                      $("#key").html(JSON.stringify(data));
+                      $("#rbutton").attr("disabled",false);
+
+                },
+                error: function (message) {
+                    alert("后台异常:"+message);
+                    $("#rbutton").attr("disabled",false);
+                }
+            });
+        }
+        function setExample(){
+            $("#orgCode").val("TAOBAO");
+            $("#mac").val("B0-83-FE-70-3F-1F");
+            $("#ip").val("172.16.3.196");
+            $("#expireDate").val("20201008");
+            $("#salt").val("greedisgood");
+        }
+    </script>
+</head>
+<body>
+<table>
+    <form id="keyseed">
+        <tr><td>机构代码:</td><td><input name="orgCode" id="orgCode"  /></td></tr>
+        <tr><td>mac:</td><td><input name="mac" id="mac" /></td></tr>
+        <tr><td>ip:</td><td><input name="ip" id="ip" /></td></tr>
+        <tr><td>有效期:</td><td><input name="expireDate" id="expireDate" /></td></tr>
+        <tr><td>混淆因子:</td><td><input name="salt" id="salt" /></td></tr>
+    </form>
+
+    <tr><td><input type="button" value="样例" onclick="setExample()"/><input type="button" value="生成许可证号" onclick="getKey()" id="rbutton"/></td><td><span id="key"></span></td></tr>
+
+</table>
+</body>
+</html>

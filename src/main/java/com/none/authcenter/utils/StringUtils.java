@@ -38,12 +38,12 @@ public class StringUtils {
 		}
 		return sb.toString();
 	}
-	public static String getLength(String str){
+	public static String getLength2(String str){
 		if(trim(str)==null){
 			return "00";
 		}
 		if(str.length()>99){
-			return str.length()+"";
+			return "99";
 		}
 		return str.length()<10?"0"+str.length():""+str.length();
 	}
