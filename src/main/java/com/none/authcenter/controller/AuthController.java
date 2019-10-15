@@ -43,22 +43,22 @@ public class AuthController {
         }
         logger.info("开始认证:request={}",request);
         try {
-            String data= request.getData();
-            request.setData(null);
-            String msg=STD3DesUtil.des3EncodeECBBase64String(key, request.toString());
-            logger.info("request签名:{}",msg);
-            if(data.equals(msg)){
+//            String data= request.getData();
+//            request.setData(null);
+//            String msg=STD3DesUtil.des3EncodeECBBase64String(key, request.toString());
+//            logger.info("request签名:{}",msg);
+//            if(data.equals(msg)){
                 String mingwen=STD3DesUtil.des3DecodeECBBase64String(key,request.getLicenceKey());
                 logger.info("明文:{}",mingwen);
                 LicenceKeySeed seed = SeedUtils.getLicenceKeySeed(mingwen);
                 LicenceKeyInfo licenceK = licenceKeyInfoMapper.selectBySeed(seed);
                 if(licenceK!=null && SeedUtils.assertEquels(seed, licenceK)){
                     response.setCode(CodeConstants.SUCCESS);
-                    response.setMsg(msg);
+                    response.setMsg("认证成功");
                     logger.info("认证结束，结果{}",response);
                     return response;
                 }
-            }
+//            }
             response.setCode(CodeConstants.AUTH_FAIL);
             response.setMsg("认证未通过");
         }catch (Exception e){
@@ -69,7 +69,22 @@ public class AuthController {
         logger.info("认证结束，结果{}",response);
         return response;
     }
-    @PostMapping("key")
+    @PostMapping("getKeySeed")
+    @ApiOperation(value = "getKeySeed")
+    public LicenceKeySeed getKeySeed(@RequestBody LicenceKey licenceKey){
+
+        try {
+            logger.info("getKeySeed:{}",licenceKey);
+            String mingwen=STD3DesUtil.des3DecodeECBBase64String(key,licenceKey.getLicenceKey());
+            logger.info("明文:{}",mingwen);
+            LicenceKeySeed seed = SeedUtils.getLicenceKeySeed(mingwen);
+            return seed;
+        } catch (Exception e){
+            logger.error("getKeySeed异常{}", e);
+            return null;
+        }
+    }
+    @PostMapping("getLicenceKey")
     @ApiOperation(value = "getLicenceKey")
     public EntityResponse<String> getLicenceKey(@RequestBody LicenceKeySeed seed){
 
