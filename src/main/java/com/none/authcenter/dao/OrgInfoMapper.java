@@ -2,6 +2,8 @@ package com.none.authcenter.dao;
 
 import com.none.authcenter.vo.OrgInfo;
 
+import java.util.List;
+
 public interface OrgInfoMapper {
     /**
      *
@@ -38,4 +40,6 @@ public interface OrgInfoMapper {
      * @mbggenerated 2019-10-10
      */
     int updateByPrimaryKey(OrgInfo record);
+
+    List<OrgInfo> selectByCondition(OrgInfo orgForSelect);
 }

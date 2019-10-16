@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 /**
  * Created by admin on 2019/10/10.
  */
@@ -36,5 +38,12 @@ public class OrgInfoMapperTest {
     @Test
     public void testUpdateByPrimaryKeySelective() throws Exception {
 
+    }
+    @Test
+    public void testSelectByCondition()throws Exception{
+        OrgInfo orgInfoForSelect=new OrgInfo();
+        orgInfoForSelect.setOrgCode("TAOBAO");
+        List<OrgInfo> orgInfoList=orgInfoMapper.selectByCondition(orgInfoForSelect);
+        System.out.println(orgInfoList);
     }
 }

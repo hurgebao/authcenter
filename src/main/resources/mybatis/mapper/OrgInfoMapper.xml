@@ -19,6 +19,21 @@
     from org_info
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.none.authcenter.vo.OrgInfo" >
+    select
+    <include refid="Base_Column_List" />
+    from org_info
+    where 1=1
+    <if test="orgName != null" >
+      and org_name = #{orgName,jdbcType=VARCHAR}
+    </if>
+    <if test="orgCode != null" >
+      and org_code = #{orgCode,jdbcType=VARCHAR}
+    </if>
+    <if test="expireDate != null" >
+      and expire_date = #{expireDate,jdbcType=VARCHAR}
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from org_info
     where id = #{id,jdbcType=INTEGER}

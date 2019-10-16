@@ -12,11 +12,14 @@ CREATE  table org_info(
    create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
    update_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最近更新时间'
 ) comment ='机构信息';
+insert into org_info (org_code,org_name,expire_date,remark) values ('TAOBAO','淘宝','20201008','测试机构');
 
 CREATE  table auth_history(
   id int PRIMARY key auto_increment COMMENT '主键',
   licence_key_id int COMMENT '许可证id',
-  remark varchar(20) NOT NULL COMMENT '备注',
+  licence_key varchar(200) COMMENT '许可证',
+  remark varchar(20) COMMENT '备注',
+  result_code varchar(50) NOT NULL COMMENT '认证结果代码',
   result varchar(50) NOT NULL COMMENT '认证结果',
   create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   update_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最近更新时间'

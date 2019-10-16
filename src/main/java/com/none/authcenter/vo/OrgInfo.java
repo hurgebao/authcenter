@@ -2,7 +2,7 @@ package com.none.authcenter.vo;
 
 import java.util.Date;
 
-public class OrgInfo {
+public class OrgInfo extends BaseVO{
     /**
      * 主键
      */

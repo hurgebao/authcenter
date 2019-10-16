@@ -20,4 +20,8 @@ public class CodeConstants {
      * 请求报文错误
      */
     public  static final String BAD_REQUEST_EXCEPTION="0003";
+    /**
+     * 无效的机构
+     */
+    public  static final String INVALID_ORG_EXCEPTION="0004";
 }

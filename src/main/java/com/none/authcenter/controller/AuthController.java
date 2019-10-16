@@ -1,7 +1,9 @@
 package com.none.authcenter.controller;
 
 import com.none.authcenter.common.CodeConstants;
+import com.none.authcenter.dao.AuthHistoryMapper;
 import com.none.authcenter.dao.LicenceKeyInfoMapper;
+import com.none.authcenter.dao.OrgInfoMapper;
 import com.none.authcenter.utils.STD3DesUtil;
 import com.none.authcenter.utils.SeedUtils;
 import com.none.authcenter.utils.ValidateUtils;
@@ -12,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by admin on 2019/9/26.
@@ -28,6 +32,10 @@ public class AuthController {
     private static Logger logger= LoggerFactory.getLogger(AuthController.class);
     @Autowired
     private LicenceKeyInfoMapper licenceKeyInfoMapper;
+    @Autowired
+    private OrgInfoMapper orgInfoMapper;
+    @Autowired
+    private AuthHistoryMapper authHistoryMapper;
     String key="f510b8737344cddbca1c8564";
     @PostMapping("auth")
     @ApiOperation(value = "auth")
@@ -39,6 +47,7 @@ public class AuthController {
             response.setMsg(e.getMessage());
             response.setCode(CodeConstants.BAD_REQUEST_EXCEPTION);
             logger.info("认证请求检验未通过：{}", e.getMessage());
+            recordAuthHistory(request, response, null);
             return response;
         }
         logger.info("开始认证:request={}",request);
@@ -55,7 +64,8 @@ public class AuthController {
                 if(licenceK!=null && SeedUtils.assertEquels(seed, licenceK)){
                     response.setCode(CodeConstants.SUCCESS);
                     response.setMsg("认证成功");
-                    logger.info("认证结束，结果{}",response);
+                    logger.info("认证结束，结果{}", response);
+                    recordAuthHistory(request,response,licenceK);
                     return response;
                 }
 //            }
@@ -67,7 +77,20 @@ public class AuthController {
             response.setCode(CodeConstants.UNKNOW_EXCEPTION);
         }
         logger.info("认证结束，结果{}",response);
+        recordAuthHistory(request,response,null);
         return response;
+    }
+    private void  recordAuthHistory(AuthRequest request,BaseResponse response,LicenceKeyInfo licenceK){
+        try {
+            AuthHistory authHistory=new AuthHistory();
+            authHistory.setLicenceKeyId(licenceK==null?null:licenceK.getId());
+            authHistory.setLicenceKey(request.getLicenceKey());
+            authHistory.setResultCode(response.getCode());
+            authHistory.setResult(response.getMsg());
+            authHistoryMapper.insertSelective(authHistory);
+        } catch (Exception e) {
+            logger.error("记录认证历史错误{}",e);
+        }
     }
     @PostMapping("getKeySeed")
     @ApiOperation(value = "getKeySeed")
@@ -104,6 +127,14 @@ public class AuthController {
                 response.setCode(CodeConstants.SUCCESS);
                 response.setMsg("success");
                 response.setT(licenceK.getLicenceKey());
+                return response;
+            }
+            OrgInfo orgForSelect=new OrgInfo();
+            orgForSelect.setOrgCode(seed.getOrgCode());
+            List<OrgInfo> orgInfoList =orgInfoMapper.selectByCondition(orgForSelect);
+            if(orgInfoList==null || orgInfoList.size()!=1 || !seed.getExpireDate().equals(orgInfoList.get(0).getExpireDate())){
+                response.setCode(CodeConstants.INVALID_ORG_EXCEPTION);
+                response.setMsg("机构信息不合法");
                 return response;
             }
             String data=SeedUtils.generateHeaderLength(seed)+ SeedUtils.generateHeader(seed);

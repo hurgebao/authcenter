@@ -2,7 +2,7 @@ package com.none.authcenter.vo;
 
 import java.util.Date;
 
-public class AuthHistory {
+public class AuthHistory extends  BaseVO{
     /**
      * 主键
      */
@@ -14,6 +14,11 @@ public class AuthHistory {
     private Integer licenceKeyId;
 
     /**
+     * 许可证
+     */
+    private String licenceKey;
+
+    /**
      * 备注
      */
     private String remark;
@@ -22,6 +27,10 @@ public class AuthHistory {
      * 认证结果
      */
     private String result;
+    /**
+     * 认证结果
+     */
+    private String resultCode;
 
     /**
      * 创建时间
@@ -65,6 +74,14 @@ public class AuthHistory {
         this.licenceKeyId = licenceKeyId;
     }
 
+    public String getLicenceKey() {
+        return licenceKey;
+    }
+
+    public void setLicenceKey(String licenceKey) {
+        this.licenceKey = licenceKey;
+    }
+
     /**
      * 备注
      * @return remark 备注
@@ -95,6 +112,14 @@ public class AuthHistory {
      */
     public void setResult(String result) {
         this.result = result == null ? null : result.trim();
+    }
+
+    public String getResultCode() {
+        return resultCode;
+    }
+
+    public void setResultCode(String resultCode) {
+        this.resultCode = resultCode;
     }
 
     /**

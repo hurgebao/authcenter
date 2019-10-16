@@ -4,13 +4,15 @@
   <resultMap id="BaseResultMap" type="com.none.authcenter.vo.AuthHistory" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="licence_key_id" property="licenceKeyId" jdbcType="INTEGER" />
+    <result column="licence_key" property="licenceKey" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="result_code" property="resultCode" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, licence_key_id, remark, result, create_time, update_time
+    id, licence_key_id, licence_key, remark, result,result_code, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -23,11 +25,11 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.none.authcenter.vo.AuthHistory" >
-    insert into auth_history (id, licence_key_id, remark, 
-      result, create_time, update_time
+    insert into auth_history (id, licence_key_id,licence_key, remark,
+      result,result_code, create_time, update_time
       )
-    values (#{id,jdbcType=INTEGER}, #{licenceKeyId,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
-      #{result,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+    values (#{id,jdbcType=INTEGER}, #{licenceKeyId,jdbcType=INTEGER},#{licenceKey,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+      #{result,jdbcType=VARCHAR},#{resultCode,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.none.authcenter.vo.AuthHistory" >
@@ -39,11 +41,17 @@
       <if test="licenceKeyId != null" >
         licence_key_id,
       </if>
+      <if test="licenceKey != null" >
+        licence_key,
+      </if>
       <if test="remark != null" >
         remark,
       </if>
       <if test="result != null" >
         result,
+      </if>
+      <if test="resultCode != null" >
+        result_code,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -59,11 +67,17 @@
       <if test="licenceKeyId != null" >
         #{licenceKeyId,jdbcType=INTEGER},
       </if>
+      <if test="licenceKey != null" >
+        #{licenceKey,jdbcType=VARCHAR},
+      </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
       </if>
       <if test="result != null" >
         #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="resultCode != null" >
+        #{resultCode,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -79,11 +93,17 @@
       <if test="licenceKeyId != null" >
         licence_key_id = #{licenceKeyId,jdbcType=INTEGER},
       </if>
+      <if test="licenceKey != null" >
+        licence_key = #{licenceKey,jdbcType=VARCHAR},
+      </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
       </if>
       <if test="result != null" >
         result = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="resultCode != null" >
+        result_code = #{resultCode,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -97,8 +117,10 @@
   <update id="updateByPrimaryKey" parameterType="com.none.authcenter.vo.AuthHistory" >
     update auth_history
     set licence_key_id = #{licenceKeyId,jdbcType=INTEGER},
+      licence_key = #{licenceKey,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
       result = #{result,jdbcType=VARCHAR},
+      result_code = #{resultCode,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
