@@ -44,6 +44,10 @@ public class LicenceKeyInfo extends  BaseVO{
     private String licenceKey;
 
     /**
+     * 状态
+     */
+    private String status;
+    /**
      * 创建时间
      */
     private Date createTime;
@@ -179,6 +183,14 @@ public class LicenceKeyInfo extends  BaseVO{
      */
     public void setLicenceKey(String licenceKey) {
         this.licenceKey = licenceKey == null ? null : licenceKey.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     /**

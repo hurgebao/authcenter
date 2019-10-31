@@ -9,6 +9,7 @@ CREATE  table org_info(
    org_code varchar(20) NOT NULL COMMENT '机构代码',
    expire_date varchar(10) NOT NULL COMMENT '到期日',
    remark varchar(20) NOT NULL COMMENT '备注',
+   org_status varchar(1) NOT NULL COMMENT '机构状态：0正常 1停用',
    create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
    update_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最近更新时间'
 ) comment ='机构信息';
@@ -35,6 +36,7 @@ CREATE  table licence_key_info(
    salt varchar(50) NOT NULL COMMENT '混淆因子',
    licence_key_seed varchar(200) NOT NULL COMMENT '许可序列号',
    licence_key varchar(200) NOT NULL COMMENT '许可序列号',
+   status varchar(1) NOT NULL COMMENT '许可证状态  0正常 1停用',
    create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
    update_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最近更新时间',
    UNIQUE KEY licencekey_seed_index (org_code,expire_date,ip,mac,salt)

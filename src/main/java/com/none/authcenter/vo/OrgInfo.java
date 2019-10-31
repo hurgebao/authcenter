@@ -29,6 +29,10 @@ public class OrgInfo extends BaseVO{
     private String remark;
 
     /**
+     * 机构状态
+     */
+    private String orgStatus;
+    /**
      * 创建时间
      */
     private Date createTime;
@@ -116,6 +120,14 @@ public class OrgInfo extends BaseVO{
      */
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getOrgStatus() {
+        return orgStatus;
+    }
+
+    public void setOrgStatus(String orgStatus) {
+        this.orgStatus = orgStatus;
     }
 
     /**
